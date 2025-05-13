@@ -1,0 +1,434 @@
+.dashboard-container {
+    display: flex;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f9fafb;
+    min-height: 100vh;
+  }
+  
+  .main-content {
+    margin-left: 240px;
+    padding: 2rem;
+    width: 100%;
+  }
+  
+  .patients-section {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #111827;
+  }
+  
+  .patients-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .patients-table th,
+  .patients-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .patients-table th {
+    background-color: #bd2503;
+    color: #fff;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+  }
+  
+  .patient-row {
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+  }
+  
+  .patient-row:hover {
+    background-color: #f7f7f7;
+  }
+  
+  .view-btn {
+    /* background-color: #0404da; */
+    border: none;
+    padding: 6px 12px;
+    color: #0404da;
+    border-radius: 6px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .view-btn:hover {
+    color: #2563eb;
+    transform: scale(1.1);
+  }
+  
+  .loading-text {
+    padding: 1rem;
+    color: #6b7280;
+  }
+  
+  /* Optional Fade Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .two-column {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .patients-section {
+    flex: 2;
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  }
+  
+  .patient-details {
+    flex: 1.2;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    /* border-left: 3px solid #bd2503; */
+  }
+  
+  .patient-details h3 {
+    font-size: 1.3rem;
+    color: #1f2937;
+    margin-bottom: 1rem;
+  }
+  
+  .patient-details p {
+    margin-bottom: 0.5rem;
+    color: #374151;
+  }
+  
+  .patient-details h4 {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    color: #0404da;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 0.4rem;
+  }
+  
+  .appointment-list {
+    margin-top: 1rem;
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .appointment-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #d1d5db;
+    color: #4b5563;
+  }
+  .patient-details {
+    flex: 1.2;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border-left: 3px solid #bd2503;
+    position: relative;
+  }
+  
+  .details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .close-icon {
+    cursor: pointer;
+    color: #6b7280;
+    transition: color 0.3s ease;
+  }
+  
+  .close-icon:hover {
+    color: #ef4444;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  
+  .pagination button {
+    padding: 0.4rem 0.8rem;
+    background-color: #0404da;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pagination button:disabled {
+    background-color: #cbd5e1;
+    cursor: not-allowed;
+  }
+  
+  .pagination span {
+    font-weight: 500;
+    color: #374151;
+  }
+  .search-container {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 12px 40px 12px 16px;
+    font-size: 0.9rem;
+    border: 2px solid #0404da;
+    border-radius: 30px;
+    background-color: #f4faff;
+    color: #2c3e50;
+    transition: all 0.3s ease;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  }
+  
+  .search-input::placeholder {
+    color: #95a5a6;
+    transition: color 0.3s;
+  }
+  
+  .search-input:focus {
+    background-color: #ffffff;
+    border-color: #2980b9;
+    box-shadow: 0 0 8px rgba(41, 128, 185, 0.3);
+  }
+  
+  .search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #0404da;
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+    pointer-events: none;
+  }
+  
+  .search-input:focus + .search-icon {
+    transform: translateY(-50%) scale(1.2);
+    color: #bd2503;
+  }
+  /* Add to your patientslist.css */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .edit-modal, .confirm-modal {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+    margin-right: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .modal-actions, .confirm-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .cancel-btn, .save-btn .delete-btnn{
+    padding: 6px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .cancel-btn {
+    background: #f0f0f0;
+  }
+  
+  .save-btn {
+    background: #4CAF50;
+    color: white;
+  }
+  
+  .delete-btn {
+    margin-top: 6px;
+    color: #f44336;
+  }
+  .delete-btnn{
+    background-color: #ef4444;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+  }
+  .delete-btnn:hover .cancel-btn:hover{
+    transform: scale(1.5);
+  }
+  .edit-btn{
+    color: #2196F3;
+    margin-top: 7px;
+  }
+  
+  .warning-text {
+    color: #f44336;
+    font-weight: bold;
+  }
+  
+  .actions-cell {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .view-btn, .edit-btn, .delete-btn {
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .view-btn:hover {
+    color: #2196F3;
+  }
+  
+  .edit-btn:hover {
+    color: #FFC107;
+  }
+  
+  .delete-btn:hover {
+    color: #bd2503;
+  }
+  
+  .selected-row {
+    background-color: #f0f7ff;
+  }
+  
+  .bulk-delete-btn {
+    background: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  .add-btn {
+    background-color: #0404da;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 10px;
+    display: flex;
+    justify-self: end;
+    /* justify-content: center; */
+    align-items: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-btn:hover {
+    background-color: #2563eb;
+  }
+  .paginationn {
+    width: 100%;
+    /* background-color: #0404da; */
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    margin-top: 1rem;
+    gap: 0.5rem;
+  }
+  
+  .paginationn button {
+    background-color: #0404da;
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .paginationn button:hover {
+    background-color: #0202b9;
+  }
+  
+  .paginationn button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  
+  .paginationn span {
+    font-weight: 500;
+    color: #333;
+  }

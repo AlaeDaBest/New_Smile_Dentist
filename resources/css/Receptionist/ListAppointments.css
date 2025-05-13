@@ -1,0 +1,95 @@
+.appointments-container {
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    flex-grow: 1;
+    padding: 2rem;
+    background-color: #ffffff;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+  #appointments-body{
+    background-color: #f5f7fa;
+    padding:40px;
+    padding-left: 280px;
+  }
+  .appointments-container h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #da2b04;
+  }
+  
+  .filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .filters input {
+    padding: 0.5rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+  }
+  
+  .filters input:focus {
+    outline: none;
+    border-color: #2c7be5;
+  }
+  
+  .appointments-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .appointments-table th,
+  .appointments-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    transition: background 0.3s;
+  }
+  
+  .appointments-table th {
+    background-color: #0404da;
+    color: #fff;
+    font-weight: 600;
+  }
+  #tr{
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .appointments-table tr:hover td {
+    background-color: #f4f4f4;
+  }
+  .appointments-table #tr:hover{
+    transform: scale(1.05);
+  }
+  
+  .appointments-table select {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.95rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  
+  .appointments-table select:hover {
+    border-color: #2c7be5;
+  }
+  
+  @media (max-width: 768px) {
+    .filters {
+      flex-direction: column;
+    }
+  
+    .appointments-table th,
+    .appointments-table td {
+      padding: 0.75rem;
+    }
+  }

@@ -1,0 +1,93 @@
+.add-patient-container {
+    display: flex;
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    min-height: 100vh;
+    padding-left: 100px;
+  }
+  
+  .add-patient-main {
+    flex: 1;
+    padding: 2rem;
+  }
+  
+  .add-patient-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 800px;
+    margin: auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .add-patient-card h2 {
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+  
+  .add-patient-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+  }
+  
+  .add-patient-main.form-group {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+  }
+  
+  .form-group label {
+    margin-bottom: 0.4rem;
+    color: #0404da;
+    font-size: 0.9rem;
+  }
+  
+  .add-patient-main .form-group input,
+  .add-patient-main .form-group select,
+  .add-patient-main .form-group textarea {
+    padding: 0.6rem;
+    border: 1px solid #0404da;
+    border-radius: 6px;
+    font-size: 0.95rem;
+  }
+  
+  .add-patient-main .form-group textarea {
+    resize: vertical;
+  }
+  
+  .add-patient-main.form-checkbox {
+    grid-column: span 2;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .submit-btn {
+    grid-column: span 2;
+    margin-top: 1rem;
+    padding: 0.8rem 1.5rem;
+    background-color: #bd2503;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #f44336;
+  }
+  #arrow{
+    font-size: 30px;
+    margin-bottom: 30px;
+    color: #0404da;
+    transition: all 0.2s ease-in;
+  }
+  #arrow:hover{
+    transform: scale(1.2);
+    color: #f44336;
+    cursor: pointer;
+  }
+  

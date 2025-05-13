@@ -1,0 +1,10 @@
+/* Simple reset */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body, header, h2 {
+  margin: 0;
+  padding: 0;
+}

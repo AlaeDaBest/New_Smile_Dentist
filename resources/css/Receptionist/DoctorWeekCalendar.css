@@ -1,0 +1,54 @@
+.calendar-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 90vh;
+    overflow-x: auto;
+    border: 1px solid #ccc;
+    font-family: sans-serif;
+  }
+  
+  .day-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #ccc;
+    min-width: 200px;
+  }
+  
+  .day-header {
+    background-color: #f0f0f0;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    font-weight: bold;
+  }
+  
+  .doctor-column {
+    flex: 1;
+    border-top: 1px solid #ddd;
+  }
+  
+  .doctor-header {
+    background-color: #e9e9e9;
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    font-size: 0.9rem;
+  }
+  
+  .appointment-slot {
+    padding: 4px;
+    border-top: 1px solid #f2f2f2;
+    min-height: 50px;
+    font-size: 0.85rem;
+    position: relative;
+  }
+  
+  .appointment {
+    margin-top: 4px;
+    background-color: #d4eaff;
+    padding: 3px 5px;
+    border-radius: 4px;
+  }
+  

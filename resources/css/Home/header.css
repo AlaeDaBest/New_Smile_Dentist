@@ -1,0 +1,86 @@
+#home_header{
+    /* background-color: brown; */
+    margin: 0;
+    display: flex;
+    padding: 10px 50px;
+    justify-content: space-between;
+    /* color: white; */
+}
+#home_header nav{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+#home_header nav a {
+    position: relative;
+    margin: 0 9%;
+    text-decoration: none;
+    /* color: white; */
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+#home_header nav a:visited{
+    color: #0013a5;
+  }
+#home_header nav a::after {
+    content: "";
+    position: absolute;
+    bottom: -4px; /* adjust if needed */
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #da2b04;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  
+#home_header nav a:hover::after {
+    transform: scaleX(1);
+  }
+  
+#home_header nav a:hover {
+    color: #da2b04;
+  }
+#home_header button {
+    position: relative;
+    padding: 10px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #da2b04;
+    background: transparent;
+    border: 2px solid #da2b04;
+    border-radius: 30px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: color 0.4s ease, border-color 0.4s ease;
+  }
+  
+#home_header button::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    background: #da2b04;
+    z-index: 0;
+    transition: width 0.4s ease;
+  }
+  
+#home_header button:hover::before {
+    width: 100%;
+  }
+  
+#home_header button:hover {
+    color: white;
+    border-color: #da2b04;
+  }
+  
+#home_header button span {
+    position: relative;
+    z-index: 1;
+  }
+body{
+    background-color: #333;
+  }
