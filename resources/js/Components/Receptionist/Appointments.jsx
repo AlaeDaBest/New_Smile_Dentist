@@ -96,11 +96,17 @@ const Appointments = () => {
     typeId: 1
   });
   const [isLegendOpen, setIsLegendOpen] = useState(true);
-
+  const token = localStorage.getItem('token');
+  console.log(token)
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const dentistsRes = await axios.get('http://127.0.0.1:8000/dentists');
+        const dentistsRes = await axios.get('http://127.0.0.1:8000/dentists',{
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
         const dentistsArray = Array.isArray(dentistsRes.data)
           ? dentistsRes.data
           : dentistsRes.data.data || dentistsRes.data.user || [];
@@ -110,9 +116,18 @@ const Appointments = () => {
         }));
         
         const [patientsRes, typesRes, apptsRes] = await Promise.all([
-          axios.get('http://127.0.0.1:8000/patients'),
-          axios.get('http://127.0.0.1:8000/types'),
-          axios.get('http://127.0.0.1:8000/appointments')
+          axios.get('http://127.0.0.1:8000/api/patients',{headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },}),
+          axios.get('http://127.0.0.1:8000/types',{headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },}),
+          axios.get('http://127.0.0.1:8000/api/appointments',{headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },})
         ]);
 
         setPatients(patientsRes.data);
@@ -196,7 +211,13 @@ const Appointments = () => {
     // console.log(endDate);
     // console.log(duration);
     try {
-      const response = await axios.post('http://127.0.0.1:8000/appointments', newAppt);
+      const response = await axios.post('http://127.0.0.1:8000/api/appointments', newAppt,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log(token);
       const newEvent = {
         id: response.data.id,
         resourceId: formData.dentistId,
@@ -312,7 +333,10 @@ const Appointments = () => {
                 };
 
                 try {
-                  const response = await axios.put(`http://127.0.0.1:8000/appointments/${eventId}`, updatedAppt);
+                  const response = await axios.put(`http://127.0.0.1:8000/api/appointments/${eventId}`, updatedAppt,{headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                  },});
                   toast.success(response.data.message, {
                     position: 'top-right',
                     autoClose: 3000,

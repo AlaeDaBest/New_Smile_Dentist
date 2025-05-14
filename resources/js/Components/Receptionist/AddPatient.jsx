@@ -23,6 +23,7 @@ const AddPatient = () => {
     medical_conditions: "",
     had_operations: false
   });
+  const token=localStorage.getItem('token');
   const navigate=useNavigate();
 
   const handleChange = (e) => {
@@ -57,7 +58,10 @@ const AddPatient = () => {
         'had_operations':formData.had_operations
       }
       console.log('response');
-      const response=await axios.post('http://127.0.0.1:8000/patients',newPatient);
+      const response=await axios.post('http://127.0.0.1:8000/api/patients',newPatient,{headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },});
       console.log(response);
       toast.success("Patient created with success", {
         position: 'top-right',

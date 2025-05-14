@@ -12,6 +12,7 @@ import Facturisation from './Components/Receptionist/Facturisation';
 import AddPatient from './Components/Receptionist/AddPatient';
 import ListAppointments from './Components/Receptionist/ListAppointments';
 import FactureList from './Components/Receptionist/FactureList';
+import LoginForm from './Components/Auth/LoginForm';
 
 function App(){
     return(<>
@@ -25,6 +26,7 @@ function App(){
                     <Route path="/facturisation/" element= {<Facturisation/>} />
                     <Route path="/patients/addpatient/" element= {<AddPatient/>} />
                     <Route path="/appointments/" element= {<ListAppointments/>} />
+                    <Route path="/login" element= {<LoginForm/>} />
                 </Routes>
             </HashRouter>
         </>

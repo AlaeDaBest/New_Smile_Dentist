@@ -22,15 +22,23 @@ const Facturisation = () => {
   const [generatedDoc, setGeneratedDoc] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [patientId,setPatientId]=useState('');
-
-  // Fetch data on component mount
+  const token=localStorage.getItem('token');
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [patientsRes, appointmentTypes,analyseTypes ] = await Promise.all([
-          axios.get("http://127.0.0.1:8000/patients"),
-          axios.get("http://127.0.0.1:8000/types"),
-          axios.get("http://127.0.0.1:8000/type_analyses"),
+          axios.get("http://127.0.0.1:8000/api/patients",{headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },}),
+          axios.get("http://127.0.0.1:8000/types",{headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },}),
+          axios.get("http://127.0.0.1:8000/type_analyses",{headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },}),
         ]);
         console.log(patientsRes,appointmentTypes,analyseTypes)
         setPatients(patientsRes.data);
@@ -110,8 +118,11 @@ const Facturisation = () => {
       };
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/estimates",
-        estimateData
+        "http://127.0.0.1:8000/api/estimates",
+        estimateData,{headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },}
       );
       setGeneratedDoc(response.data);
       setIsGenerating(false);
@@ -142,8 +153,11 @@ const Facturisation = () => {
       };
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/invoices",
-        invoiceData
+        "http://127.0.0.1:8000/api/invoices",
+        invoiceData,{headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },}
       );
       setGeneratedDoc(response.data);
       setIsGenerating(false);

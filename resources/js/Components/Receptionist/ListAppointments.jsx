@@ -45,10 +45,13 @@ const ListAppointments = () => {
   const [dentists,setDentists]=useState([]);
   const [editedAppointment,setEditedAppointment]=useState(null);
   const [types,setTypes]=useState([]);
-
+  const token=localStorage.getItem('token');
   const fetchAppoitments = () => {
     axios
-      .get("http://127.0.0.1:8000/appointments")
+      .get("http://127.0.0.1:8000/api/appointments",{headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },})
       .then((res) => setAppointments(res.data))
       .catch((err) => console.error(err));
   };
@@ -57,23 +60,35 @@ const ListAppointments = () => {
   }, []);
   
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/appointments")
+    axios.get("http://127.0.0.1:8000/api/appointments",{headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },})
       .then((response) => {
         console.log(response);
         setAppointments(response.data);
       })
       .catch((error) => console.log(error));
-    axios.get('http://127.0.0.1:8000/patients')
+    axios.get('http://127.0.0.1:8000/patients',{headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },})
     .then(response=>{
       console.log(response);
       setPatients(response.data);
     }).catch((error) => console.log(error));
-    axios.get('http://127.0.0.1:8000/dentists')
+    axios.get('http://127.0.0.1:8000/dentists',{headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },})
     .then(response=>{
       console.log(response);
       setDentists(response.data);
     }).catch((error) => console.log(error));
-    axios.get('http://127.0.0.1:8000/types')
+    axios.get('http://127.0.0.1:8000/types',{headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },})
     .then(response=>{
       console.log(response);
       setTypes(response.data);
@@ -87,7 +102,10 @@ const ListAppointments = () => {
     e.preventDefault();
     console.log(editedAppointment);
     try{
-      const response=axios.put(`http://127.0.0.1:8000/appointments/${editedAppointment.id}`,editedAppointment);
+      const response=axios.put(`http://127.0.0.1:8000/api/appointments/${editedAppointment.id}`,editedAppointment,{headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },});
       toast.success('Appointment updated succesfully');
       fetchAppoitments();
       setEditMode(false);
@@ -98,7 +116,10 @@ const ListAppointments = () => {
   }
   const handleStatusChange=async(id, newStatus)=>{
     try{
-        const response=await axios.patch(`http://127.0.0.1:8000/appointments/toggleStatus/${id}`,{status:newStatus});
+        const response=await axios.patch(`http://127.0.0.1:8000/api/appointments/toggleStatus/${id}`,{status:newStatus},{headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },});
         console.log(response);
         toast.success(response.data.message);
     }catch(error){
@@ -118,7 +139,10 @@ const ListAppointments = () => {
   const handleDelete=async(id)=>{
     console.log(id);
     try{
-        const response=await axios.delete(`http://127.0.0.1:8000/appointments/${id}`);
+        const response=await axios.delete(`http://127.0.0.1:8000/api/appointments/${id}`,{headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },});
         console.log(response);
         setShowDeleteConfirm(false);
         toast.success('Appointment deleted successfully');

@@ -16,7 +16,7 @@ const Header=()=>{
                 <ScrollLink to="contact" smooth={true} duration={500}>Contact </ScrollLink>
             </nav>
             <div >
-                <button onClick={()=>navigate('/calendar')}><span>Connect</span></button>
+                <button onClick={()=>navigate('/login')}><span>Connect</span></button>
             </div>
         </header>
     )

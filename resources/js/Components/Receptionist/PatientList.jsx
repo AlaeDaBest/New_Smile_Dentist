@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SideMenu from "./SideMenu";
-import axios from "axios";
+import axios, { Axios } from "axios";
 import { TbEdit } from "react-icons/tb";
 import { motion, AnimatePresence } from "framer-motion";
 import "../../../css/Receptionist/patientslist.css";
@@ -49,7 +49,7 @@ const PatientsList = () => {
   const [patientToDelete, setPatientToDelete] = useState(null);
   const [selectedPatients, setSelectedPatients] = useState([]);
   const [showBulkDeleteConfirm, setShowBulkDeleteConfirm] = useState(false);
-
+  const token=localStorage.getItem('token');
   const navigate=useNavigate();
 
   useEffect(() => {
@@ -57,8 +57,10 @@ const PatientsList = () => {
   }, []);
 
   const fetchPatients = () => {
-    axios
-      .get("http://127.0.0.1:8000/patients")
+    axios.get("http://127.0.0.1:8000/api/patients",{headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },})
       .then((res) => setPatients(res.data))
       .catch((err) => console.error(err));
   };
@@ -67,7 +69,10 @@ const PatientsList = () => {
     setSelectedPatient(patient);
     setCurrentPage(1); // Reset pagination
     axios
-      .get(`http://127.0.0.1:8000/patients/${patient.id}/appointments`)
+      .get(`http://127.0.0.1:8000/api/patients/${patient.id}/appointments`,{headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },})
       .then((response) => {
         setAppointments(response.data.appointments);
       }).catch((err) => console.error(err));
@@ -96,7 +101,10 @@ const PatientsList = () => {
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      const response=await axios.put(`http://127.0.0.1:8000/patients/${editedPatient.id}`, editedPatient);
+      const response=await axios.put(`http://127.0.0.1:8000/api/patients/${editedPatient.id}`, editedPatient,{headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },});
       console.log(editedPatient);
       toast.success(response.data.message || "Patient updated successfully.");
       fetchPatients();
@@ -111,7 +119,10 @@ const PatientsList = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/patients/${patientToDelete.id}`);
+      await axios.delete(`http://127.0.0.1:8000/api/patients/${patientToDelete.id}`,{headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },});
       fetchPatients();
       if (selectedPatient && selectedPatient.id === patientToDelete.id) {
         handleClose();
@@ -128,7 +139,10 @@ const PatientsList = () => {
     try {
       await Promise.all(
         selectedPatients.map(patientId => 
-          axios.delete(`http://127.0.0.1:8000/patients/${patientId}`)
+          axios.delete(`http://127.0.0.1:8000/api/patients/${patientId}`,{headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },})
         )
       );
       fetchPatients();

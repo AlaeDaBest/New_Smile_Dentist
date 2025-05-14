@@ -9,7 +9,7 @@ export default function FactureDetails({ facture, paiements, onNewPayment,setSel
   const [amount, setAmount] = useState('');
   const [method, setMethod] = useState('cash');
   const [loading, setLoading] = useState(false);
-
+  const token=localStorage.getItem('token');
   const totalPaid = paiements.reduce((sum, p) => sum + parseFloat(p.amount_paid), 0);
   const remaining = facture.total_amount - totalPaid;
 
@@ -24,7 +24,10 @@ export default function FactureDetails({ facture, paiements, onNewPayment,setSel
     }
     console.log(newPaiment);
     try {
-      const response = await axios.post(`/payments`, newPaiment);
+      const response = await axios.post(`/api/payments`, newPaiment,{headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },});
       console.log(response);
       onNewPayment(response.data);
       setAmount('');

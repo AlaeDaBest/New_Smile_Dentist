@@ -11,9 +11,12 @@ import { FaDownload } from "react-icons/fa6";
 const FactureList = () => {
   const [selectedFacture, setSelectedFacture] = useState(null);
   const [factures, setFactures] = useState([]);
-
+  const token=localStorage.getItem('token');
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/invoices')
+    axios.get('http://127.0.0.1:8000/api/invoices',{headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },})
       .then(response => {
         console.log(response);
         setFactures(response.data);
@@ -21,7 +24,7 @@ const FactureList = () => {
   }, []);
   function HandleDownload(id){
     const link = document.createElement('a');
-    link.href = `http://127.0.0.1:8000/invoices/${id}/download`;
+    link.href = `http://127.0.0.1:8000/api/invoices/${id}/download`;
     link.setAttribute('download', `invoice_${id}.pdf`);
     document.body.appendChild(link);
     link.click();

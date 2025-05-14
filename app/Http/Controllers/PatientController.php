@@ -112,7 +112,8 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
-        dd($patient->appointments()->first());
+        // dd($patient->appointments()->first());
+        $patient->appointments()->delete();
         $patient->user->delete();
         $patient->delete();
         return response()->json(['message'=>'Patient deleted successfully']);
