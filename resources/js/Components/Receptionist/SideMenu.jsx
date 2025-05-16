@@ -11,6 +11,8 @@ import {
   LogOut,
   Menu,
 } from "lucide-react";
+import { MdPayments } from "react-icons/md";
+import { BsFillChatDotsFill } from "react-icons/bs";
 
 export default function SideMenu() {
   const [isOpen, setIsOpen] = useState(true);
@@ -36,8 +38,9 @@ export default function SideMenu() {
     { icon: <Home size={20} />, label: "Dashboard", path: "/calendar" },
     { icon: <Calendar size={20} />, label: "Appointments", path: "/appointments" },
     { icon: <Users size={20} />, label: "Patients", path: "/patients" },
-    { icon: <Smile size={20} />, label: "Factures", path: "/factures" },
+    { icon: <MdPayments size={20} />, label: "Invoices", path: "/factures" },
     { icon: <Receipt size={20} />, label: "Facturisation", path: "/facturisation" },
+    { icon: <BsFillChatDotsFill size={20} />, label: "Messages", path: "/messages" },
     { icon: <LogOut size={20}  />, label: "Logout", action: HandleLogout },
   ];
   return (
@@ -47,7 +50,9 @@ export default function SideMenu() {
     >
       <div className="header">
         <span className="logo">
-          {isOpen && "New Smile"}
+          {isOpen &&
+            <img src="Images/Logo/newSmile_white.png" id="logo_white" alt="" />
+          }
         </span>
         <Menu
           className="menu-icon"

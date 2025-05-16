@@ -34,5 +34,12 @@ class AuthController extends Controller
     //     $request->user()->currentAccessToken()->delete();
     //     return response()->json(['message' => 'Logged out']);
     // }
-
+    public function users()
+    {
+        $users=User::with('roleable')
+        ->where('roleable_type', 'App\Models\Infermier')
+        ->orWhere('roleable_type', 'App\Models\Dentist')
+        ->get();  
+        return response()->json($users);
+    }
 }

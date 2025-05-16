@@ -11,6 +11,10 @@
     align-items: center;
     gap: 30px;
 }
+#logo_colored{
+  width: 70px;
+  height: 60px;
+}
 #home_header nav a {
     position: relative;
     margin: 0 9%;

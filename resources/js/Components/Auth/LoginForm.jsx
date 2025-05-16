@@ -16,6 +16,7 @@ const LoginForm = () => {
     try {
         const res = await axios.post('http://127.0.0.1:8000/api/login',{ email, password });
         localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data.user));
         const response = await axios.get('http://127.0.0.1:8000/api/protected-route', {
             headers: {
             Authorization: `Bearer ${res.data.token}`,

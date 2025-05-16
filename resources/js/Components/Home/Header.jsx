@@ -6,8 +6,9 @@ const Header=()=>{
     const navigate=useNavigate();
     return(
         <header id="home_header">
-            <div>
-                <h2>New Smile</h2>
+            <div style={{display:"flex",alignItems:"center"}}>
+            <img src="/Images/Logo/NewSmile_colored.png" id="logo_colored" alt="" />
+                <h2 style={{color:"#0013a5"}}>New Smile</h2>
             </div>
             <nav>
                 <NavLink to="/">Home</NavLink>

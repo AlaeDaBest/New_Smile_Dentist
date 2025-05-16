@@ -306,8 +306,12 @@
   }
   
   .save-btn {
-    background: #4CAF50;
+    background: #f44336;
     color: white;
+    padding: 6px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    border: none;
   }
   
   .delete-btn {

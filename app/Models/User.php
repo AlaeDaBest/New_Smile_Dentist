@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Message;
+use App\Models\GroupChat;
 
 class User extends Authenticatable
 {
@@ -53,5 +55,9 @@ class User extends Authenticatable
     public function receivedMessages()
     {
         return $this->hasMany(Message::class,'receiver_id');
+    }
+    public function groupChats()
+    {
+        return $this->belongsToMany(GroupChat::class, 'group_chat_members');
     }
 }

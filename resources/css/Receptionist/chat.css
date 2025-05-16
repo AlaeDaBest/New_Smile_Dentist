@@ -1,0 +1,23 @@
+.messages {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .message {
+    max-width: 60%;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px 0;
+    background-color: #e35d53;  /*C06C84*/
+  }
+  
+  .sent {
+    align-self: flex-end;
+    background-color: #0404da;
+  }
+  
+  .received {
+    align-self: flex-start;
+    background-color: #f44336;
+  }

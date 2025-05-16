@@ -10,14 +10,14 @@ class MessageController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($user_id)
     {
         $authId = auth()->id();
-
-        $messages = Message::where(function ($q) use ($authId, $user) {
-            $q->where('sender_id', $authId)->where('receiver_id', $user->id);
-        })->orWhere(function ($q) use ($authId, $user) {
-            $q->where('sender_id', $user->id)->where('receiver_id', $authId);
+        
+        $messages = Message::where(function ($q) use ($authId, $user_id) {
+            $q->where('sender_id', $authId)->where('receiver_id', $user_id);
+        })->orWhere(function ($q) use ($authId, $user_id) {
+            $q->where('sender_id', $user_id)->where('receiver_id', $authId);
         })->orderBy('created_at')->get();
     
         return response()->json($messages);
