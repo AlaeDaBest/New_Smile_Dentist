@@ -207,11 +207,9 @@ const PatientsList = () => {
             <h2 className="section-title">Patients</h2>
             {selectedPatients.length > 0 && (
               <motion.button
-                className="bulk-delete-btn"
-                onClick={() => setShowBulkDeleteConfirm(true)}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                whileHover={{ scale: 1.05 }}
+                
+              
+              
               >
                 <Trash2 size={18} /> Delete Selected ({selectedPatients.length})
               </motion.button>
@@ -344,6 +342,7 @@ const PatientsList = () => {
               <h3>Patient Info</h3>
               <X className="close-icon" onClick={handleClose} />
             </div>
+            <p><strong>Matricule:</strong> {selectedPatient.id}</p>
             <p><strong>Name:</strong> {selectedPatient.user.lastname} {selectedPatient.user.firstname}</p>
             <p><strong>Gender:</strong> {selectedPatient.user.gender}</p>
             <p><strong>Email:</strong> {selectedPatient.user.email}</p>

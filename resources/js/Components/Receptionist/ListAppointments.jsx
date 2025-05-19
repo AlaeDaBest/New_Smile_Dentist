@@ -39,7 +39,7 @@ const ListAppointments = () => {
   const [appointments, setAppointments] = useState([]);
   const [appointmentToDelete,setAppointmentToDelete]=useState(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [filters, setFilters] = useState({ date: "", patient: "" });
+  const [filters, setFilters] = useState({ date: new Date().toISOString().split("T")[0], patient: "" });
   const [editMode,setEditMode]=useState(false);
   const [patients,setPatients]=useState([]);
   const [dentists,setDentists]=useState([]);
@@ -69,7 +69,7 @@ const ListAppointments = () => {
         setAppointments(response.data);
       })
       .catch((error) => console.log(error));
-    axios.get('http://127.0.0.1:8000/patients',{headers: {
+    axios.get('http://127.0.0.1:8000/api/patients',{headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },})

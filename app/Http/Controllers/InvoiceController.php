@@ -18,7 +18,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $invoices=Invoice::with(['items','patient.user','payments'])->get();
+        $invoices=Invoice::with(['items','patient.user','payments'])->orderBy('created_at','desc')->get();
         return $invoices;
     }
 

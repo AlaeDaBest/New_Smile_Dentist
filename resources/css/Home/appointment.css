@@ -1,6 +1,6 @@
 #form_add_rdv{
     position: fixed;
-    bottom: 30%;
+    bottom: -150px;
     left: 50%;
     transform: translate(-50%, -20%);
     background-color: #fff;
@@ -8,7 +8,8 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     border-radius: 10px;
     z-index: 1000000;
-    width: 20%;
+    width: 200px;
+    /* width:300px, */
 }
 
 #form_add_rdv input,#form_add_rdv select{

@@ -41,7 +41,8 @@ const Facturisation = () => {
           },}),
         ]);
         console.log(patientsRes,appointmentTypes,analyseTypes)
-        setPatients(patientsRes.data);
+        setPatients(patientsRes.data.filter((patient) => patient.id!= 9))
+        console.log(patients);
         setAppointmentTypes(appointmentTypes.data);
         setAnalyseTypes(analyseTypes.data);
       } catch (err) {

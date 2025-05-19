@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";  // Import NavLink
 import '../../../css/Receptionist/sidemenu.css';
+import { MdDashboard } from "react-icons/md";
 import {
   Home,
   Calendar,
@@ -35,13 +36,14 @@ export default function SideMenu() {
     }
   };
   const menuItems = [
-    { icon: <Home size={20} />, label: "Dashboard", path: "/calendar" },
+    { icon: <Home size={20} />, label: "Calendar", path: "/calendar" },
     { icon: <Calendar size={20} />, label: "Appointments", path: "/appointments" },
     { icon: <Users size={20} />, label: "Patients", path: "/patients" },
     { icon: <MdPayments size={20} />, label: "Invoices", path: "/factures" },
     { icon: <Receipt size={20} />, label: "Facturisation", path: "/facturisation" },
     { icon: <BsFillChatDotsFill size={20} />, label: "Messages", path: "/messages" },
-    { icon: <LogOut size={20}  />, label: "Logout", action: HandleLogout },
+    { icon: <MdDashboard size={20} />, label: "Dashboard", path: "/dashboard" },
+    { icon: <LogOut size={20}  />, label: "Logout", action: HandleLogout }
   ];
   return (
     <motion.div

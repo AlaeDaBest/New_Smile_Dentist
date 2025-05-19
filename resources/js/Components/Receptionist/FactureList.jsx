@@ -11,6 +11,10 @@ import { FaDownload } from "react-icons/fa6";
 const FactureList = () => {
   const [selectedFacture, setSelectedFacture] = useState(null);
   const [factures, setFactures] = useState([]);
+  const [filters, setFilters] = useState({
+    patient: "",
+    date: ""
+  });
   const token=localStorage.getItem('token');
   useEffect(() => {
     axios.get('http://127.0.0.1:8000/api/invoices',{headers: {
@@ -36,11 +40,24 @@ const FactureList = () => {
         <div className="facture-list-container">
             <SideMenu/>
         <h1 className="facture-title">List of Invoices</h1>
-
+        <div className="filters">
+            <input
+                type="text"
+                placeholder="Search patient name"
+                value={filters.patient}
+                onChange={(e) => setFilters({ ...filters, patient: e.target.value })}
+            />
+            <input
+                type="date"
+                value={filters.date}
+                onChange={(e) => setFilters({ ...filters, date: e.target.value })}
+            />
+        </div>
         <table className="facture-table">
             <thead>
             <tr>
                 <th>Patient</th>
+                <th>Date</th>
                 <th>Total (€)</th>
                 <th>Payed (€)</th>
                 <th>Remaining (€)</th>
@@ -50,10 +67,18 @@ const FactureList = () => {
             </thead>
             <tbody>
             <AnimatePresence>
-                {factures.map((f) => {
+                {factures
+                .filter(f => {
+                    const patientName = `${f.patient.user.firstname} ${f.patient.user.lastname}`.toLowerCase();
+                    const matchesName = patientName.includes(filters.patient.toLowerCase());
+
+                    const invoiceDate = new Date(f.created_at).toISOString().split("T")[0];
+                    const matchesDate = filters.date === "" || invoiceDate === filters.date;
+
+                    return matchesName && matchesDate;
+                }).map((f) => {
                 const paid = f.payments?.reduce((sum, p) => sum + parseFloat(p.amount_paid), 0) || 0;
                 const remaining = f.total_amount - paid;
-
                 return (
                     <motion.tr
                     key={f.id}
@@ -65,6 +90,7 @@ const FactureList = () => {
                     whileHover={{ scale: 1.02 }}
                     >
                     <td>{f.patient.user.firstname} {f.patient.user.lastname}</td>
+                    <td>{new Date(f.created_at).toISOString().split("T")[0]}</td>
                     <td>{f.total_amount}</td>
                     <td>{paid.toFixed(2)}</td>
                     <td>{remaining.toFixed(2)}</td>

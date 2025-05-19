@@ -70,3 +70,6 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 use App\Http\Controllers\UserController;
 Route::middleware('auth:sanctum')->resource('/users', UserController::class);
+
+use App\Http\Controllers\DashboardController;
+Route::middleware('auth:sanctum')->get('/dashboard-stats', [DashboardController::class, 'stats']);

@@ -95,6 +95,7 @@ const Appointments = () => {
     patientId: '',
     typeId: 1
   });
+  const [clickPosition, setClickPosition] = useState({ x: 0, y: 0 });
   const [isLegendOpen, setIsLegendOpen] = useState(true);
   const token = localStorage.getItem('token');
   console.log(token)
@@ -204,6 +205,7 @@ const Appointments = () => {
       type_id: formData.typeId || 1,
       statut: 'Pending'
     };
+    console.log(newAppt);
     const startISO = `${formData.date}T${formData.time}:00`;
     const endDate = new Date(startISO);
     // console.log('rr',endDate);
@@ -359,11 +361,21 @@ const Appointments = () => {
                 }
               }}
               dateClick={(info) => {
+                var { pageX, pageY } = info.jsEvent; 
+                console.log(pageX, pageY);
+                if(pageY > 200 && pageY < 600){
+                  pageY =  400;
+                }else if(pageY > 601 && pageY < 900){
+                  pageY =  500;
+                }else if(pageY > 901 && pageY < 1200){
+                  pageY =  700;
+                }
                 setFormData({
                   date: info.dateStr.split('T')[0],
                   time: info.dateStr.split('T')[1]?.slice(0, 5) || '09:00',
                   dentistId: info.resource?.id || '',
                 });
+                setClickPosition({ x: pageX, y: pageY+100 });
                 setShowForm(true);
               }}
               eventClick={info => {
@@ -472,8 +484,23 @@ const Appointments = () => {
       <AnimatePresence>
         {showForm && (
           <motion.div 
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          style={{
+            position: 'absolute',
+            top: clickPosition.y,
+            left: clickPosition.x,
+            transform: 'translate(10px, 10px)',
+            zIndex: 9999,
+            background: 'white',
+            padding: '20px',
+            borderRadius: '10px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            
+            ...glassStyle
+          }}
           >
             <motion.div 
               style={glassStyle}

@@ -14,6 +14,7 @@ import ListAppointments from './Components/Receptionist/ListAppointments';
 import FactureList from './Components/Receptionist/FactureList';
 import LoginForm from './Components/Auth/LoginForm';
 import GroupChat from './Components/Receptionist/GroupChat';
+import Dashboard from './Components/Receptionist/Dashboard';
 
 function App(){
     return(<>
@@ -28,6 +29,7 @@ function App(){
                     <Route path="/patients/addpatient/" element= {<AddPatient/>} />
                     <Route path="/appointments/" element= {<ListAppointments/>} />
                     <Route path="/messages/" element= {<GroupChat/>} />
+                    <Route path="/dashboard/" element= {<Dashboard/>} />
                     <Route path="/login" element= {<LoginForm/>} />
                 </Routes>
             </HashRouter>
