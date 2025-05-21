@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SideMenu from "./SideMenu";
 import axios, { Axios } from "axios";
 import { TbEdit } from "react-icons/tb";
@@ -49,6 +49,7 @@ const PatientsList = () => {
   const [patientToDelete, setPatientToDelete] = useState(null);
   const [selectedPatients, setSelectedPatients] = useState([]);
   const [showBulkDeleteConfirm, setShowBulkDeleteConfirm] = useState(false);
+  const fileInputRef = useRef(null);
   const token=localStorage.getItem('token');
   const navigate=useNavigate();
 
@@ -61,13 +62,13 @@ const PatientsList = () => {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },})
-      .then((res) => setPatients(res.data))
+      .then((res) => setPatients(res.data.filter(patient => patient.id!== 9)))
       .catch((err) => console.error(err));
   };
 
   const handleView = (patient) => {
     setSelectedPatient(patient);
-    setCurrentPage(1); // Reset pagination
+    setCurrentPage(1); 
     axios
       .get(`http://127.0.0.1:8000/api/patients/${patient.id}/appointments`,{headers: {
         Authorization: `Bearer ${token}`,
@@ -89,7 +90,7 @@ const PatientsList = () => {
       ...patient,
       user: {
         ...patient.user,
-        birthdate: birthdate
+        birthdate: birthdate,
       }
     });
     const updatedPatient={
@@ -100,20 +101,39 @@ const PatientsList = () => {
 
   const handleSave = async (e) => {
     e.preventDefault();
+    setEditedPatient({...editedPatient,
+      user:{
+        ...editedPatient.user,
+        photo:fileInputRef.current.files[0]
+      }
+    })
+    const updatedPatient={
+      'firstname':editedPatient.user.firstname,
+      'lastname':editedPatient.user.lastname,
+      'email':editedPatient.user.email,
+      'tel':editedPatient.user.tel,
+      'birthdate':editedPatient.user.birthdate,
+      'gender':editedPatient.user.gender,
+      'photo':fileInputRef.current.files[0],
+      'allergies':editedPatient.allergies,
+      'medical_conditions':editedPatient.medical_conditions,
+    }
+    console.log(fileInputRef.current.files[0])
     try {
-      const response=await axios.put(`http://127.0.0.1:8000/api/patients/${editedPatient.id}`, editedPatient,{headers: {
+      const response=await axios.post(`http://127.0.0.1:8000/api/patients/${editedPatient.id}?_method=PUT`, updatedPatient,{headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
       },});
-      console.log(editedPatient);
+      console.log(response);
       toast.success(response.data.message || "Patient updated successfully.");
       fetchPatients();
       if (selectedPatient && selectedPatient.id === editedPatient.id) {
         setSelectedPatient(editedPatient); 
       }
       setEditMode(false);
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
+      toast.error(error.data.message || "Error updating the patient.");
     }
   };
 
@@ -196,7 +216,7 @@ const PatientsList = () => {
     }
     return age;
   };
-
+console.log(selectedPatient)
   return (
     <div className="dashboard-container">
       <SideMenu />
@@ -255,6 +275,7 @@ const PatientsList = () => {
                       />
                     )}
                   </th>
+                  <th>Image</th>
                   <th>Name</th>
                   <th>Email</th>
                   <th>Phone</th>
@@ -277,6 +298,13 @@ const PatientsList = () => {
                           onChange={() => togglePatientSelection(patient.id)}
                         />
                       </td>
+                      <td>
+                        <img 
+                          src={patient.user.photo || "Images/Profiles/default.jpeg"} 
+                          alt={`${patient.user.firstname} ${patient.user.lastname}`} 
+                          className="patient-image" 
+                        />
+                      </td>
                       <td>{patient.user.lastname} {patient.user.firstname}</td>
                       <td>{patient.user.email}</td>
                       <td>{patient.user.tel}</td>
@@ -286,13 +314,13 @@ const PatientsList = () => {
                           className="view-btn" 
                           onClick={() => handleView(patient)} 
                           title="View Details"
-                          size={20}
+                          size={24}
                         />
                         <Edit 
                           className="edit-btn" 
                           onClick={() => handleEdit(patient)}
                           title="Edit Patient"
-                          size={20}
+                          size={24}
                         />
                         <Trash2 
                           className="delete-btn" 
@@ -301,7 +329,7 @@ const PatientsList = () => {
                             setShowDeleteConfirm(true);
                           }}
                           title="Delete Patient"
-                          size={20}
+                          size={24}
                         />
                       </td>
                     </motion.tr>
@@ -338,8 +366,11 @@ const PatientsList = () => {
             exit={{ x: 50, opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <div className="details-header">
-              <h3>Patient Info</h3>
+            <div className="details-header"> 
+              <div>
+                {/* <h3>Patient Info</h3> */}
+                <img className="patient-image-info" src={selectedPatient.user.photo||'Images/Profiles/default.jpeg'} alt="" />
+              </div>
               <X className="close-icon" onClick={handleClose} />
             </div>
             <p><strong>Matricule:</strong> {selectedPatient.id}</p>
@@ -522,7 +553,10 @@ const PatientsList = () => {
                       <option value="female">Female</option>
                     </select>
                   </div>
-                  
+                  <div className="form-group">
+                    <label htmlFor="">Photo</label>
+                    <input ref={fileInputRef} type="file" name="" id="" />
+                  </div>
                   <div className="form-group">
                     <label>Allergies</label>
                     <textarea

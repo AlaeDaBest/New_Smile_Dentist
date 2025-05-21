@@ -102,7 +102,7 @@ const Appointments = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const dentistsRes = await axios.get('http://127.0.0.1:8000/dentists',{
+        const dentistsRes = await axios.get('http://127.0.0.1:8000/api/dentists',{
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -114,8 +114,7 @@ const Appointments = () => {
         const   doctors = dentistsArray.map(d => ({
           id: String(d.id),
           title: `${d.user.firstname} ${d.user.lastname}`,
-        }));
-        
+        }));        
         const [patientsRes, typesRes, apptsRes] = await Promise.all([
           axios.get('http://127.0.0.1:8000/api/patients',{headers: {
             Authorization: `Bearer ${token}`,

@@ -98,14 +98,6 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   }
   
-  .patient-details {
-    flex: 1.2;
-    background: #ffffff;
-    border-radius: 10px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    /* border-left: 3px solid #bd2503; */
-  }
   
   .patient-details h3 {
     font-size: 1.3rem;
@@ -141,6 +133,7 @@
     flex: 1.2;
     background: #ffffff;
     border-radius: 10px;
+    height: 700px;
     padding: 1.5rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     border-left: 3px solid #bd2503;
@@ -347,14 +340,20 @@
   .view-btn, .edit-btn, .delete-btn {
     cursor: pointer;
     transition: all 0.2s;
+    margin: 4px 0px;
+  }
+  .edit-btn, .delete-btn{
+    margin: 9px 0px;
   }
   
   .view-btn:hover {
     color: #2196F3;
+    
   }
   
   .edit-btn:hover {
     color: #FFC107;
+    margin: 0px;
   }
   
   .delete-btn:hover {
@@ -435,4 +434,16 @@
   .paginationn span {
     font-weight: 500;
     color: #333;
+  }
+  .patient-image{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem;
+  }
+  .patient-image-info{
+    height: 100px;
+    width: 120px;
+    border-radius: 50px;
   }

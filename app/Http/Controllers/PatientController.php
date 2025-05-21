@@ -49,7 +49,8 @@ class PatientController extends Controller
             $patient=new Patient();
             $patient->allergies=$request->allergies;
             $patient->medical_conditions=$request->medical_conditions;
-            $patient->had_operations=$request->had_operations;
+            $patient->had_operations=$request->had_operations=='false'?0:1;
+            // dd($patient);
             $patient->save();
             // dd($patient);
             $user=new User();
@@ -61,9 +62,16 @@ class PatientController extends Controller
             $user->email=$request->email;
             $user->tel=$request->tel;
             $user->address=$request->address;
-            $user->photo=$request->photo;
             $user->roleable_type=Patient::class;
             $user->roleable_id=$patient->id;
+            if($request->hasFile('photo')){
+                // dd($request->file('photo'));
+                $file=$request->file('photo');
+                $filename=$user->firstname.$user->lastname.time().'.'.$file->getClientOriginalExtension();
+                $file->move(public_path('Images/Profiles/'),$filename);
+                $request->merge(['photo'=>$filename]);
+                $user->photo='Images/Profiles/'.$filename;
+            }
             // dd($user);
             $user->save();
         }catch(\Exception $e){
@@ -92,19 +100,31 @@ class PatientController extends Controller
      */
     public function update(Request $request, Patient $patient)
     {
-        // dd($patient);
-        $patient->allergies=$request->allergies;
-        $patient->medical_conditions=$request->medical_conditions;
-        $patient->had_operations=$request->had_operations;
-        $patient->user->firstname=$request->user['firstname'];
-        $patient->user->lastname=$request->user['lastname'];
-        $patient->user->tel=$request->user['tel'];
-        $patient->user->email=$request->user['email'];
-        $patient->user->birthdate=$request->user['birthdate'];
-        $patient->user->gender=$request->user['gender'];
-        $patient->user->save();
-        $patient->save();
+        try{
+            // dd($patient->user);
+            $patient->allergies=$request->allergies;
+            $patient->medical_conditions=$request->medical_conditions;
+            $patient->had_operations=$request->had_operations;
+            $patient->user->firstname=$request->firstname;
+            $patient->user->lastname=$request->lastname;
+            $patient->user->tel=$request->tel;
+            $patient->user->email=$request->email;
+            $patient->user->birthdate=$request->birthdate;
+            $patient->user->gender=$request->gender;
+            if ($request->hasFile('photo')) {
+                // dd($request->file('photo'));
+                $file=$request->file('photo');
+                $filename=$patient->user->firstname.$patient->user->lastname.time().'.'.$file->getClientOriginalExtension();
+                $file->move(public_path('Images/Profiles/'),$filename);
+                $request->merge(['photo'=>$filename]);
+                $patient->user->photo='Images/Profiles/'.$filename;
+            }
+            $patient->user->save();
+            $patient->save();
         return response()->json(['message'=>"Patient updated successfully"]);
+        }catch(\Exception $e){
+            return response()->json(['message'=>'Error updating the patient',$e->getMessage()]);
+        }
     }
 
     /**
@@ -112,7 +132,6 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
-        // dd($patient->appointments()->first());
         $patient->appointments()->delete();
         $patient->user->delete();
         $patient->delete();

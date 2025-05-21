@@ -84,6 +84,11 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     width: calc(25% - 20px);
     min-width: 200px;
+    border-left: #bd2503 4px solid;
+  }
+  .person-card .icons{
+    display: flex;
+    justify-content: space-between;
   }
   .detail-cards-wrapper {
     background: #fff;

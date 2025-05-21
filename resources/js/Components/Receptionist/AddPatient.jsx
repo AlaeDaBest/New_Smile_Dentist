@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import SideMenu from "./SideMenu";
 import "../../../css/Receptionist/AddPatient.css"; 
@@ -23,9 +23,9 @@ const AddPatient = () => {
     medical_conditions: "",
     had_operations: false
   });
+  const fileInputRef = useRef(null);
   const token=localStorage.getItem('token');
   const navigate=useNavigate();
-
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
     setFormData((prev) => ({
@@ -43,6 +43,7 @@ const AddPatient = () => {
       });
     }
     try{
+      const file=fileInputRef.current.files[0];
       const newPatient={
         'CIN':formData.CIN,
         'firstname':formData.firstname,
@@ -52,7 +53,7 @@ const AddPatient = () => {
         'email':formData.email,
         'tel':formData.tel,
         'address':formData.address,
-        'photo':formData.photo,
+        'photo':file,
         'allergies':formData.allergies,
         'medical_conditions':formData.medical_conditions,
         'had_operations':formData.had_operations
@@ -60,7 +61,7 @@ const AddPatient = () => {
       console.log('response');
       const response=await axios.post('http://127.0.0.1:8000/api/patients',newPatient,{headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
       },});
       console.log(response);
       toast.success("Patient created with success", {
@@ -75,7 +76,6 @@ const AddPatient = () => {
       });
     }
   };
-
   return (
     <div className="add-patient-container">
       <SideMenu />
@@ -126,7 +126,7 @@ const AddPatient = () => {
             </div>
             <div className="form-group">
               <label>Photo</label>
-              <input type="file" name="photo" accept="image/*" onChange={handleChange} />
+              <input type="file" ref={fileInputRef} name="photo" accept="image/*" onChange={handleChange} />
             </div>
             <div className="form-group">
               <label>Allergies</label>

@@ -77,7 +77,7 @@ const ListAppointments = () => {
       console.log(response);
       setPatients(response.data);
     }).catch((error) => console.log(error));
-    axios.get('http://127.0.0.1:8000/dentists',{headers: {
+    axios.get('http://127.0.0.1:8000/api/dentists',{headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },})
@@ -122,6 +122,7 @@ const ListAppointments = () => {
         },});
         console.log(response);
         toast.success(response.data.message);
+        fetchAppoitments();
     }catch(error){
         console.log(error);
         toast.error('Error updating appointment');
@@ -130,6 +131,19 @@ const ListAppointments = () => {
       prev.map((appt) => (appt.id === id ? { ...appt, status: newStatus } : appt))
     );
   };
+  const handleSituationChange=async(id,newSituation)=>{
+    try{
+      const response=await axios.patch(`http://127.0.0.1:8000/api/appointments/toggleSituation/${id}`,{situation:newSituation},{headers: {Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }})
+      console.log(response);
+      toast.success(response.data.message);
+      fetchAppoitments();
+    }catch(error){
+      console.log(error);
+      toast.error('Error updating appointment');
+    }
+  }
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -203,6 +217,7 @@ const ListAppointments = () => {
               <th>Dentist</th>
               <th>Type</th>
               <th>Status</th>
+              <th>Situation</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -246,6 +261,14 @@ const ListAppointments = () => {
                         <option value="Pending"  selected={appt.statut=='Pending'?true:false}>Pending</option>
                         <option value="Arrived" selected={appt.statut=='Arrived'?true:false}>Arrived</option>
                         <option value="Abscent" selected={appt.statut=='Abscent'?true:false}>Abscent</option>
+                      </select>
+                    </td>
+                    <td>
+                      <select onChange={(e)=>handleSituationChange(appt.id,e.target.value)} disabled={appt.statut=='Arrived'?false:true} id="">
+                        <option value="Wainting">Wainting</option>
+                        <option value="Armchair">Armchair</option>
+                        <option value="Secretary">Secretary</option>
+                        <option value="Abscent" selected={appt.statut=='Released'?true:false}>Released</option>
                       </select>
                     </td>
                     <td>

@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 use App\Http\Controllers\AppointmentController ;
 Route::middleware('auth:sanctum')->resource('/appointments', AppointmentController::class);
 Route::patch('/appointments/toggleStatus/{id}',[AppointmentController::class,'toggleStatus']);
+Route::patch('/appointments/toggleSituation/{id}',[AppointmentController::class,'toggleSituation']);
 
 use App\Http\Controllers\PatientController ;
 Route::resource('/patients', PatientController::class);
@@ -73,3 +74,9 @@ Route::middleware('auth:sanctum')->resource('/users', UserController::class);
 
 use App\Http\Controllers\DashboardController;
 Route::middleware('auth:sanctum')->get('/dashboard-stats', [DashboardController::class, 'stats']);
+
+use App\Http\Controllers\DentistController ;
+Route::middleware('auth:sanctum')->resource('/dentists', DentistController::class);
+
+use App\Http\Controllers\InfermierController ;
+Route::middleware('auth:sanctum')->resource('/assistants', InfermierController::class);

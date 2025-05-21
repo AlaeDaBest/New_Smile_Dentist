@@ -28,6 +28,13 @@ class AppointmentController extends Controller
         // dd($appointment);
         return response()->json(['message'=>'Appointment updated successfully']);
     }
+    public function toggleSituation(Request $request,String $id)
+    {
+        $appointment=Appointment::findOrFail($id);
+        $appointment->situation=$request->situation;
+        $appointment->save();
+        return response()->json(['message'=>'Appointment updated successfully']);
+    }
     /**
      * Show the form for creating a new resource.
      */

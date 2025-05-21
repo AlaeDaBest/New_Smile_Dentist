@@ -20,9 +20,6 @@ Route::get('/', function () {
 use App\Http\Controllers\UserController ;
 Route::resource('/users', UserController::class);
 
-use App\Http\Controllers\DentistController ;
-Route::resource('/dentists', DentistController::class);
-
 use App\Http\Controllers\TypeController ;
 Route::resource('/types', TypeController::class);
 
