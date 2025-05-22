@@ -126,7 +126,6 @@ const FileInput = styled.input`
   margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
-  
   border: 0;
 `;
 
@@ -172,19 +171,21 @@ const CancelButton = styled(motion.button)`
   }
 `;
 
-const DentistForm = ({ nurse, onClose, onSaved }) => {
+const DentistForm = ({ dentist, onClose, onSaved }) => {
     const [formData, setFormData] = useState({
-      CIN: nurse?.user.CIN || '',
-      firstname: nurse?.user?.firstname || '',
-      lastname: nurse?.user?.lastname || '',
-      tel: nurse?.user?.tel || '',
-      email: nurse?.user?.email || '',
-      gender: nurse?.user?.gender || 'female',
-      birthdate: nurse?.user?.birthdate || '',
-      password: '',
+      CIN: dentist?.user.CIN || '',
+      firstname: dentist?.user?.firstname || '',
+      lastname: dentist?.user?.lastname || '',
+      tel: dentist?.user?.tel || '',
+      email: dentist?.user?.email || '',
+      gender: dentist?.user?.gender || 'female',
+      birthdate: dentist?.user?.birthdate || '',
+      password: dentist?.user?.password||'',
       photo: null,
-      date_recrutement: nurse?.date_recrutement || '',
+      recrutement_date: dentist?.recrutement_date || '',
+      speciality: dentist?.speciality || 'orthodontics',
     });
+    console.log('dentist',dentist);
     
     const [fileName, setFileName] = useState('No file chosen');
     const fileInputRef = useRef(null);
@@ -200,7 +201,7 @@ const DentistForm = ({ nurse, onClose, onSaved }) => {
     const handleSubmit = async (e) => {
       e.preventDefault();
       const file = fileInputRef.current.files[0];
-      const assistant = {
+      const NewDentist = {
         'CIN': formData.CIN,
         'firstname': formData.firstname,
         'lastname': formData.lastname,
@@ -208,30 +209,34 @@ const DentistForm = ({ nurse, onClose, onSaved }) => {
         'email': formData.email,
         'gender': formData.gender,
         'birthdate': formData.birthdate,
-        'date_recrutement': formData.date_recrutement,
+        'recrutement_date': formData.recrutement_date,
+        'password': formData.password,
+        'speciality':formData.speciality,
         'photo': file,
       };
+      console.log(formData);
       
-      const url = nurse 
-        ? `/api/assistants/${nurse.id}?_method=PUT` 
-        : `/api/assistants`;
-      const method = nurse ? 'post' : 'post';
+      const url = dentist 
+        ? `/api/dentists/${dentist.id}?_method=PUT` 
+        : `/api/dentists`;
+      const method = dentist ? 'post' : 'post';
   
       try {
-        const response = await axios[method](url, assistant, {
+        const response = await axios[method](url, NewDentist, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'multipart/form-data'
           }
         });
-        toast.success(nurse ? "Assistant updated successfully" : "Assistant created successfully",{
+        console.log(response);
+        toast.success(dentist ? "Dentist updated successfully" : "Dentist created successfully",{
             position: 'top-right',
             autoClose: 3000,
         });
         onSaved();  
         onClose();  
       } catch (err) {
-        toast.error("An error occurred while saving the assistant",{
+        toast.error("An error occurred while saving the dentist",{
             position: 'top-right',
             autoClose: 3000,
         });
@@ -245,7 +250,7 @@ const DentistForm = ({ nurse, onClose, onSaved }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <FormTitle>{nurse ? "Edit Assistant" : "Create New Assistant"}</FormTitle>
+        <FormTitle>{dentist ? "Edit Dentist" : "Create New Dentist"}</FormTitle>
         <form onSubmit={handleSubmit} id="Assistant_form">
           <FormGrid>
             <FormGroup
@@ -259,7 +264,7 @@ const DentistForm = ({ nurse, onClose, onSaved }) => {
                 placeholder="CIN" 
                 value={formData.CIN} 
                 onChange={e => setFormData({...formData, CIN: e.target.value})} 
-                required
+                
               />
             </FormGroup>
             
@@ -274,7 +279,7 @@ const DentistForm = ({ nurse, onClose, onSaved }) => {
                 placeholder="First Name" 
                 value={formData.firstname} 
                 onChange={e => setFormData({...formData, firstname: e.target.value})} 
-                required
+                
               />
             </FormGroup>
             
@@ -289,7 +294,7 @@ const DentistForm = ({ nurse, onClose, onSaved }) => {
                 placeholder="Last Name" 
                 value={formData.lastname} 
                 onChange={e => setFormData({...formData, lastname: e.target.value})} 
-                required
+                
               />
             </FormGroup>
             
@@ -319,7 +324,7 @@ const DentistForm = ({ nurse, onClose, onSaved }) => {
                 placeholder="birthdate" 
                 value={formData.birthdate} 
                 onChange={e => setFormData({...formData, birthdate: e.target.value})} 
-                required
+                
               />
             </FormGroup>
             
@@ -332,10 +337,32 @@ const DentistForm = ({ nurse, onClose, onSaved }) => {
               <FormInput 
                 type="date" 
                 placeholder="recruitment date" 
-                value={formData.date_recrutement} 
-                onChange={e => setFormData({...formData, date_recrutement: e.target.value})} 
-                required
+                value={formData.recrutement_date} 
+                onChange={e => setFormData({...formData, recrutement_date: e.target.value})} 
+                
               />
+            </FormGroup>
+
+            <FormGroup
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
+              <FormLabel>Speciality:</FormLabel>
+              <FormSelect 
+                value={formData.speciality} 
+                onChange={(e) => setFormData({...formData, speciality: e.target.value})}
+              >
+                <option value="orthodontics">Orthodontics</option>
+                <option value="endodontics">Endodontics</option>
+                <option value="periodontics">Periodontics</option>
+                <option value="oral_surgery">Oral Surgery</option>
+                <option value="pediatric_dentistry">Pediatric Dentistry</option>
+                <option value="prosthodontics">Prosthodontics</option>
+                <option value="oral_pathology">Oral Pathology</option>
+                <option value="dental_radiology">Dental Radiology</option>
+                <option value="public_health">Public Health</option>
+              </FormSelect>
             </FormGroup>
             
             <FormGroup
@@ -349,7 +376,7 @@ const DentistForm = ({ nurse, onClose, onSaved }) => {
                 placeholder="email" 
                 value={formData.email} 
                 onChange={e => setFormData({...formData, email: e.target.value})} 
-                required
+                
               />
             </FormGroup>
             
@@ -364,11 +391,11 @@ const DentistForm = ({ nurse, onClose, onSaved }) => {
                 placeholder="Phone number" 
                 value={formData.tel} 
                 onChange={e => setFormData({...formData, tel: e.target.value})} 
-                required
+                 
               />
             </FormGroup>
             
-            {!nurse && (
+            {!dentist && (
               <FormGroup
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -379,8 +406,7 @@ const DentistForm = ({ nurse, onClose, onSaved }) => {
                   type="password" 
                   placeholder="password" 
                   value={formData.password} 
-                  onChange={e => setFormData({...formData, password: e.target.value})} 
-                  required
+                  onChange={e => setFormData({...formData, password: e.target.value})}                
                 />
               </FormGroup>
             )}
@@ -419,7 +445,7 @@ const DentistForm = ({ nurse, onClose, onSaved }) => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              {nurse ? "Update Assistant" : "Create Assistant"}
+              {dentist ? "Update Assistant" : "Create Assistant"}
             </SubmitButton>
           </ButtonGroup>
         </form>

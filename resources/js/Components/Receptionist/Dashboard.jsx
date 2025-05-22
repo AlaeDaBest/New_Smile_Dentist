@@ -76,6 +76,19 @@ const handleDeleteAssistant=async(assistantId) => {
     toast.error("Failed to delete assistant");
   }
 }
+const handleDeleteDentist=async(dentistId) => {
+  try {
+    await axios.delete(`/api/dentists/${dentistId}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    });
+    toast.success("Dentist deleted successfully");
+    setShowDeleteConfirm(false);
+    fetchUpdatedStats();
+  } catch (error) {
+    console.error(error);
+    toast.error("Failed to delete dentist");
+  }
+}
   return (
     <div className="dashboard-container">
       <SideMenu />
@@ -108,6 +121,14 @@ const handleDeleteAssistant=async(assistantId) => {
             <h3>Dentists</h3>
             <button className="close-btn" onClick={() => setExpandedSection(null)}>✖</button>
             </div>
+            <div><motion.button className="add-btn"
+            onClick={() =>{
+              setEditingEntity(null);
+              setShowDentistForm(true);
+            }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            whileHover={{ scale: 1.05 }}> <TbNurseFilled size={20}/> </motion.button></div>
             <div className="detail-cards">
             {stats.dentists_list.map(d => (
                 <div key={d.id} className="person-card">
@@ -183,7 +204,7 @@ const handleDeleteAssistant=async(assistantId) => {
                             exit={{ scale: 0.9, opacity: 0 }}
                           >
                             <h3>Confirm Deletion</h3>
-                            <p>Are you sure you want to delete {assistantToDelete.user.firstname||''} { assistantToDelete.user.lastname||''}  ?</p>
+                            <p>Are you sure you want to delete {assistantToDelete?assistantToDelete.user.firstname||''&&assistantToDelete.user.lastname :dentistToDelete.user.firstname||'' && dentistToDelete.user.lastname||''}  ?</p>
                             <p className="warning-text">This action cannot be undone.</p>
                             
                             <div className="confirm-actions">
@@ -193,12 +214,23 @@ const handleDeleteAssistant=async(assistantId) => {
                               >
                                 Cancel
                               </button>
-                              <button 
+                              
+                              {
+                                assistantToDelete?
+                                <button 
                                 className="delete-btnn"
                                 onClick={()=>handleDeleteAssistant(assistantToDelete.id)}
                               >
                                 Delete
                               </button>
+                              :
+                              <button 
+                                className="delete-btnn"
+                                onClick={()=>handleDeleteDentist(dentistToDelete.id)}
+                              >
+                                Delete
+                              </button>
+                              }
                             </div>
                           </motion.div>
                         </motion.div>
