@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../../../css/Receptionist/invoicelist.css';
 import axios from 'axios';
 import { X } from "lucide-react";
 import { toast } from 'react-toastify';
-import { ToastContainer } from 'react-toastify';
 
 export default function FactureDetails({ facture, paiements, onNewPayment,setSelectedFacture }) {
   const [amount, setAmount] = useState('');
@@ -40,26 +39,35 @@ export default function FactureDetails({ facture, paiements, onNewPayment,setSel
     }
   };
 
+  const downloadPdf = () => {
+    const link = document.createElement('a');
+    link.href = `/api/invoices/${facture.id}/pdf`;
+    link.target = '_blank';
+    link.click();
+  };
+
   return (
-    <div className="facture-details-card">
+    <div className="facture-details-card" >
+
+      <div >
         <X className="close-icon" onClick={() => setSelectedFacture(null)} />
-      <h2 className="facture-details-title">Facture #{facture.id}</h2>
-      <p><strong>Total:</strong> {facture.total_amount} €</p>
-      <p><strong>Paid:</strong> {totalPaid.toFixed(2)} €</p>
-      <p><strong>Remaining:</strong> {remaining.toFixed(2)} €</p>
-      <p><strong>Status:</strong> <span className={`status ${facture.status}`}>{facture.status.replace('_', ' ')}</span></p>
+        <h2 className="facture-details-title" style={{ color: '#000', fontSize: '1.5rem', fontWeight: 'bold' }}>Facture #{facture.id}</h2>
+        <p><strong>Total:</strong> {facture.total_amount} DH</p>
+        <p><strong>Paid:</strong> {totalPaid.toFixed(2)} DH</p>
+        <p><strong>Remaining:</strong> {remaining.toFixed(2)} DH</p>
+        <p><strong>Status:</strong> <span className={`status ${facture.status}`}>{facture.status.replace('_', ' ')}</span></p>
 
-      <hr className="divider" />
+        <hr className="divider" />
 
-      <h3 className="payment-heading">Payments</h3>
-      <ul className="payments-list">
-        {paiements.map(p => (
-          <li key={p.id}>
-            {p.payment_date} – {p.amount_paid} € ({p.payment_method})
-          </li>
-        ))}
-      </ul>
-
+        <h3 className="payment-heading">Payments</h3>
+        <ul className="payments-list">
+          {paiements.map(p => (
+            <li key={p.id}>
+              {p.payment_date} – {p.amount_paid} € ({p.payment_method})
+            </li>
+          ))}
+        </ul>
+      </div>
       <form onSubmit={handleSubmit} className="payment-form">
         <input
           type="text"
@@ -74,10 +82,15 @@ export default function FactureDetails({ facture, paiements, onNewPayment,setSel
           <option value="card">Card</option>
           <option value="transfer">Bank Transfer</option>
         </select>
-
-        <button type="submit" disabled={loading}>
-          {loading ? 'Processing...' : 'Add Payment'}
-        </button>
+        <div>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Processing...' : 'Add Payment'}
+          </button>
+          <button onClick={downloadPdf} id='download-button'  className="download-button">
+            Download PDF
+          </button>
+      </div>
+        
       </form>
     </div>
   );

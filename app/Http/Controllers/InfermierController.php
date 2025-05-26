@@ -31,6 +31,9 @@ class InfermierController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'email' => 'required|email|unique:users,email',
+        ]);
         try{
             $infermier=new Infermier();
             $infermier->date_recrutement=$request->date_recrutement;
@@ -43,6 +46,7 @@ class InfermierController extends Controller
             $user->email=$request->email;
             $user->birthdate=$request->birthdate;
             $user->gender=$request->gender;
+            $user->is_admin=$request->is_admin==true ? 1 : 0;
             $user->password=Hash::make($request->password);
             $user->roleable_type=Infermier::class;
             $user->roleable_id=$infermier->id;
@@ -56,7 +60,7 @@ class InfermierController extends Controller
             $user->save();
         return response()->json(['message'=>"Assistant created successfully"]);
         }catch(\Exception $e){
-            return response()->json(['message'=>'Error creating the assistant',$e->getMessage()]);
+            return response()->json(['message'=>'Error creating the assistant',$e->getMessage()],500);
         }
     }
 

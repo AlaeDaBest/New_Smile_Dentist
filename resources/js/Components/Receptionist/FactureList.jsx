@@ -58,9 +58,9 @@ const FactureList = () => {
             <tr>
                 <th>Patient</th>
                 <th>Date</th>
-                <th>Total (€)</th>
-                <th>Payed (€)</th>
-                <th>Remaining (€)</th>
+                <th>Total (DH)</th>
+                <th>Payed (DH)</th>
+                <th>Remaining (DH)</th>
                 <th>Status</th>
                 <th>Actions</th>
             </tr>

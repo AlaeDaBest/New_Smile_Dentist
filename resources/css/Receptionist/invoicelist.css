@@ -152,6 +152,12 @@
     cursor: pointer;
     transition: background-color 0.3s;
   }
+  #download-button{
+    background-color: #c70000;
+  }
+  #download-button:hover{
+    background-color: #a90202;
+  }
   
   .payment-form button:hover:not(:disabled) {
     background-color: #0056b3;

@@ -180,6 +180,7 @@ const DentistForm = ({ dentist, onClose, onSaved }) => {
       email: dentist?.user?.email || '',
       gender: dentist?.user?.gender || 'female',
       birthdate: dentist?.user?.birthdate || '',
+      is_admin: dentist?.user?.is_admin || false,
       password: dentist?.user?.password||'',
       photo: null,
       recrutement_date: dentist?.recrutement_date || '',
@@ -201,7 +202,14 @@ const DentistForm = ({ dentist, onClose, onSaved }) => {
     const handleSubmit = async (e) => {
       e.preventDefault();
       const file = fileInputRef.current.files[0];
-      
+      if(formData.password.length<8 && !dentist){
+        console.error("Password must be at least 8 characters long");
+        toast.error("Password must be at least 8 characters long", {
+          position: 'top-right',
+          autoClose: 3000,
+        });
+        return;
+      }
       const NewDentist = {
         'CIN': formData.CIN,
         'firstname': formData.firstname,
@@ -212,6 +220,7 @@ const DentistForm = ({ dentist, onClose, onSaved }) => {
         'birthdate': formData.birthdate,
         'recrutement_date': formData.recrutement_date,
         'password': formData.password,
+        'is_admin': formData.is_admin,
         'speciality':formData.speciality,
         'photo': file,
       };
@@ -237,7 +246,7 @@ const DentistForm = ({ dentist, onClose, onSaved }) => {
         onSaved();  
         onClose();  
       } catch (err) {
-        toast.error("An error occurred while saving the dentist",{
+        toast.error("The email must be unique",{
             position: 'top-right',
             autoClose: 3000,
         });
@@ -395,6 +404,20 @@ const DentistForm = ({ dentist, onClose, onSaved }) => {
                  
               />
             </FormGroup>
+            <FormGroup
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+            >
+              <FormLabel>Role:</FormLabel>
+              <FormSelect 
+                value={formData.is_admin} 
+                onChange={(e) => setFormData({...formData, gender: e.target.value})}
+              >
+                <option value={true}>Admin</option>
+                <option value={false}>User</option>
+              </FormSelect>
+            </FormGroup>
             
             {!dentist && (
               <FormGroup
@@ -446,7 +469,7 @@ const DentistForm = ({ dentist, onClose, onSaved }) => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              {dentist ? "Update Assistant" : "Create Assistant"}
+              {dentist ? "Update Dentist" : "Create Dentist"}
             </SubmitButton>
           </ButtonGroup>
         </form>

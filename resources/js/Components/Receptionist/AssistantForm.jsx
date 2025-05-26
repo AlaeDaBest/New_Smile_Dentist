@@ -182,6 +182,7 @@ const AssistantForm = ({ nurse, onClose, onSaved }) => {
       gender: nurse?.user?.gender || 'female',
       birthdate: nurse?.user?.birthdate || '',
       password: '',
+      is_admin: nurse?.user?.is_admin || false,
       photo: null,
       date_recrutement: nurse?.date_recrutement || '',
     });
@@ -199,6 +200,15 @@ const AssistantForm = ({ nurse, onClose, onSaved }) => {
   
     const handleSubmit = async (e) => {
       e.preventDefault();
+      console.log(formData.password);
+      if(formData.password.length<8 && !nurse){
+        console.error("Password must be at least 8 characters long");
+        toast.error("Password must be at least 8 characters long", {
+          position: 'top-right',
+          autoClose: 3000,
+        });
+        return;
+      }
       const file = fileInputRef.current.files[0];
       const assistant = {
         'CIN': formData.CIN,
@@ -209,9 +219,9 @@ const AssistantForm = ({ nurse, onClose, onSaved }) => {
         'gender': formData.gender,
         'birthdate': formData.birthdate,
         'date_recrutement': formData.date_recrutement,
+        'is_admin': formData.is_admin,
         'photo': file,
       };
-      
       const url = nurse 
         ? `/api/assistants/${nurse.id}?_method=PUT` 
         : `/api/assistants`;
@@ -231,7 +241,7 @@ const AssistantForm = ({ nurse, onClose, onSaved }) => {
         onSaved();  
         onClose();  
       } catch (err) {
-        toast.error("An error occurred while saving the assistant",{
+        toast.error("The email must be unique",{
             position: 'top-right',
             autoClose: 3000,
         });
@@ -259,7 +269,7 @@ const AssistantForm = ({ nurse, onClose, onSaved }) => {
                 placeholder="CIN" 
                 value={formData.CIN} 
                 onChange={e => setFormData({...formData, CIN: e.target.value})} 
-                required
+                
               />
             </FormGroup>
             
@@ -319,7 +329,7 @@ const AssistantForm = ({ nurse, onClose, onSaved }) => {
                 placeholder="birthdate" 
                 value={formData.birthdate} 
                 onChange={e => setFormData({...formData, birthdate: e.target.value})} 
-                required
+                
               />
             </FormGroup>
             
@@ -349,7 +359,7 @@ const AssistantForm = ({ nurse, onClose, onSaved }) => {
                 placeholder="email" 
                 value={formData.email} 
                 onChange={e => setFormData({...formData, email: e.target.value})} 
-                required
+                
               />
             </FormGroup>
             
@@ -364,8 +374,22 @@ const AssistantForm = ({ nurse, onClose, onSaved }) => {
                 placeholder="Phone number" 
                 value={formData.tel} 
                 onChange={e => setFormData({...formData, tel: e.target.value})} 
-                required
+                
               />
+            </FormGroup>
+            <FormGroup
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+            >
+              <FormLabel>Role:</FormLabel>
+              <FormSelect 
+                value={formData.is_admin} 
+                onChange={(e) => setFormData({...formData, gender: e.target.value})}
+              >
+                <option value={true}>Admin</option>
+                <option value={false}>User</option>
+              </FormSelect>
             </FormGroup>
             
             {!nurse && (

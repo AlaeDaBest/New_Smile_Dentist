@@ -18,6 +18,8 @@ import { IoPersonSharp } from "react-icons/io5";
 
 export default function SideMenu() {
   const [isOpen, setIsOpen] = useState(true);
+  const user= JSON.parse(localStorage.getItem('user'));
+  const isAdmin=user?.is_admin;
   const HandleLogout = async () => {
     const token = localStorage.getItem('token');
   
@@ -41,9 +43,9 @@ export default function SideMenu() {
     { icon: <Calendar size={20} />, label: "Appointments", path: "/appointments" },
     { icon: <Users size={20} />, label: "Patients", path: "/patients" },
     { icon: <MdPayments size={20} />, label: "Invoices", path: "/factures" },
-    { icon: <Receipt size={20} />, label: "Facturisation", path: "/facturisation" },
+    { icon: <Receipt size={20} />, label: "Invoice/Estimate", path: "/facturisation" },
     { icon: <BsFillChatDotsFill size={20} />, label: "Messages", path: "/messages" },
-    { icon: <MdDashboard size={20} />, label: "Dashboard", path: "/dashboard" },
+    ...(isAdmin ? [{ icon: <MdDashboard size={20} />, label: "Dashboard", path: "/dashboard" }] : []),
     { icon: <IoPersonSharp size={20} />, label: "Profile", path: "/profile" },
     { icon: <LogOut size={20}  />, label: "Logout", action: HandleLogout }
   ];

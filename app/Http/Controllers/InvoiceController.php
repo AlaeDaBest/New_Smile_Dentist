@@ -37,6 +37,21 @@ class InvoiceController extends Controller
         $pdf = Pdf::loadView('invoices.pdf', compact('invoice'));
         return $pdf->download("invoice_{$invoice->id}.pdf");
     }
+    public function generatePdf($id)
+    {
+        $invoice = Invoice::with('payments')->findOrFail($id);
+
+        $totalPaid = $invoice->payments->sum('amount_paid');
+        $remaining = $invoice->total_amount - $totalPaid;
+
+        $pdf = Pdf::loadView('payments.pdf', [
+            'invoice' => $invoice,
+            'totalPaid' => $totalPaid,
+            'remaining' => $remaining,
+        ]);
+
+        return $pdf->download("invoice-{$invoice->id}.pdf");
+    }
     /**
      * Store a newly created resource in storage.
      */

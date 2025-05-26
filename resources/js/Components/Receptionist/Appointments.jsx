@@ -248,7 +248,7 @@ const Appointments = () => {
   return (
     <div className="appointments-container" style={{
       background: 'linear-gradient(135deg, #f9fafb 0%, #fff 100%)',
-      minHeight: '100vh',
+      minHeight: '120vh',
       padding: '20px'
     }}>
       <SideMenu />
@@ -394,6 +394,7 @@ const Appointments = () => {
                 flex: 1,
                 maxHeight: "100vh",
                 overflowY: "auto",
+                height: "630px",
                 padding: "20px",
                 backgroundColor: "rgba(255, 255, 255, 0.8)",
                 borderRadius: "20px",

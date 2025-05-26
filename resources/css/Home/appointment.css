@@ -8,8 +8,7 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     border-radius: 10px;
     z-index: 1000000;
-    width: 200px;
-    /* width:300px, */
+    width: 300px;
 }
 
 #form_add_rdv input,#form_add_rdv select{

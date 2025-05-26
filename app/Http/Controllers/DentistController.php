@@ -31,6 +31,9 @@ class DentistController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'email' => 'required|email|unique:users,email',
+        ]);
         try{
             // dd($request->all());
             $dentist=new Dentist();
@@ -45,6 +48,7 @@ class DentistController extends Controller
             $user->email=$request->email;
             $user->birthdate=$request->birthdate;
             $user->gender=$request->gender;
+            $user->is_admin=$request->is_admin==true?1:0;
             $user->password=Hash::make($request->password);
             $user->roleable_type=Dentist::class;
             $user->roleable_id=$dentist->id;
@@ -83,7 +87,6 @@ class DentistController extends Controller
      */
     public function update(Request $request, Dentist $dentist)
     {
-        // dd($request->all());
         try{
             $dentist->recrutement_date=$request->recrutement_date;
             $user=$dentist->user;
@@ -94,6 +97,7 @@ class DentistController extends Controller
             $user->email=$request->email;
             $user->birthdate=$request->birthdate;
             $user->gender=$request->gender;
+            $user->is_admin=$request->is_admin==true?1:0;
             if($request->password){
                 $request->validate([
                     'password' => 'required|min:8',
