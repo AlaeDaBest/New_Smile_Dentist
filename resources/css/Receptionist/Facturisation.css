@@ -404,4 +404,127 @@
     color: #ffffff;
     box-shadow: 0 4px 12px rgba(0, 19, 165, 0.3);
   }
-  
+  /* Dental Chart Modal Styles */
+.dental-chart-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+}
+
+/* Tooth Input Styles */
+.tooth-input-group {
+  position: relative;
+}
+
+.tooth-input-container {
+  display: flex;
+  gap: 8px;
+}
+
+.tooth-input-container input {
+  flex: 1;
+}
+
+.select-tooth-button {
+  background-color: #0013a5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.select-tooth-button:hover {
+  background-color: #0020e6;
+}
+/* Tooth Selection Styles */
+.tooth-input-group input[readonly] {
+  cursor: pointer;
+  background-color: #f8f9fa;
+}
+
+.tooth-input-container {
+  position: relative;
+  display: flex;
+}
+
+.tooth-input-container input {
+  padding-right: 30px;
+}
+
+.clear-tooth-button {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+}
+
+.clear-tooth-button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.tooth-selector-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.tooth-selector-modal .modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 900px;
+}
+
+.tooth-selector-modal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}

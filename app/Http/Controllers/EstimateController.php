@@ -59,6 +59,7 @@ class EstimateController extends Controller
                 $estimateItem->itemable_type=$item['treatmentType']=='appointment'?Type::class:TypeAnalyse::class;
                 $estimateItem->itemable_id=$item['treatment_id'];
                 $estimateItem->unit_price=$item['unit_price'];
+                $estimateItem->tooth=$item['tooth'];
                 $estimateItem->save();
             }
             return response()->json([

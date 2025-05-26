@@ -7,12 +7,13 @@ import Select from 'react-select';
 import "../../../css/Receptionist/Facturisation.css"; // Your custom styles
 import { toast } from "react-toastify";
 import { ToastContainer } from 'react-toastify';
+import DentalChart from "./DentalChart";
 
 const Facturisation = () => {
   const [activeTab, setActiveTab] = useState("estimate"); // "estimate" or "invoice"
   const [treatmentType, setTreatmentType] = useState("appointment");
   const [estimateItems, setEstimateItems] = useState([
-    { id: Date.now(), price: "", type: "", name: "",typeT:"" },
+    { id: Date.now(), price: "", type: "", name: "",typeT:"",tooth:"" },
   ]);
   const [patients, setPatients] = useState([]);
   const [selectedPatient, setSelectedPatient] = useState(null);
@@ -20,8 +21,12 @@ const Facturisation = () => {
   const [analyseTypes, setAnalyseTypes] = useState([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedDoc, setGeneratedDoc] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [patientId,setPatientId]=useState('');
+
+  const [currentItemId, setCurrentItemId] = useState(null);
+
+  const [showToothSelector, setShowToothSelector] = useState(false);
+  const [currentToothField, setCurrentToothField] = useState(null);
+
   const token=localStorage.getItem('token');
   useEffect(() => {
     const fetchData = async () => {
@@ -59,12 +64,39 @@ const Facturisation = () => {
       { id: Date.now(),  price: "", type: "", name: "",typeT:"" },
     ]);
     console.log(estimateItems);
+    setCurrentItemId(Date.now());
+  };
+
+  const renderToothInput = (item) => (
+    <div className="form-group tooth-input-group">
+      <label>Tooth Number</label>
+      <div className="tooth-input-container">
+        <input disabled={item.typeT == "appointment"&&(item.type==2||item.type==4||item.type==6||item.type==8||item.type==9||item.type==10||item.type==11||item.type==12||item.type==13||item.type==14||item.type==15||item.type==16||item.type==17||item.type==18)?false:true} className="tooth-input"
+          type="text"
+          value={item.tooth}
+          readOnly
+          placeholder={currentToothField?.tooth ||'Click to select a tooth'}
+          onClick={() => {
+            setCurrentToothField(item);
+            setShowToothSelector(true);
+          }}
+        />
+      </div>
+    </div>
+  );
+
+  const handleToothSelect = (toothNumber) => {
+    console.log('tooth',toothNumber);
+    if (currentToothField) {
+      handleItemChange(currentToothField.id, 'tooth', toothNumber);
+    }
+    setShowToothSelector(false);// Hide the dental chart after selection
   };
 
   const handleRemoveItem = (id) => {
     if (estimateItems.length > 1) {
       setEstimateItems(estimateItems.filter((item) => item.id !== id));
-    }
+     }
   };
 
   const handleItemChange = (id, field, value) => {
@@ -81,6 +113,7 @@ const Facturisation = () => {
             if (treatment) {
               updatedItem.name = treatment.name;
               updatedItem.price = treatment.price;
+              updatedItem.tooth = treatment.tooth;
             }
           }
 
@@ -113,7 +146,8 @@ const Facturisation = () => {
         items: estimateItems.map((item) => ({
           treatment_id: item.type,
           unit_price: item.price,
-          treatmentType:item.typeT
+          treatmentType:item.typeT,
+          tooth:item.tooth
         })),
         total: calculateTotal(),
       };
@@ -343,6 +377,8 @@ const Facturisation = () => {
                       />
                     </div>
 
+                    {renderToothInput(item)}
+
                     {/* Remove Button */}
                     {estimateItems.length > 1 && (
                       <button
@@ -356,7 +392,23 @@ const Facturisation = () => {
                   </motion.div>
                 ))}
               </div>
-
+                {/* Dental Chart Modal */}
+        <AnimatePresence>
+        {showToothSelector && (
+          <div className="tooth-selector-modal">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h3>Select Tooth</h3>
+                  <X size={20} onClick={() => setShowToothSelector(false)} className="close-icon" />
+              </div>
+              <DentalChart 
+                onToothSelect={handleToothSelect}
+                selectedTooth={currentToothField?.tooth}
+              />
+            </div>
+          </div>
+        )}
+        </AnimatePresence>
 
               <motion.button
                 type="button"

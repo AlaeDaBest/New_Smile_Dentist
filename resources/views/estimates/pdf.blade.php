@@ -86,18 +86,23 @@
         <div class="header">
             <h1>Dental Estimate</h1>
         </div>
-
         <div class="info">
             <p><strong>Estimate #:</strong> {{ $estimate->id }}</p>
             <p><strong>Patient:</strong> {{ $estimate->patient->user->firstname }} {{ $estimate->patient->user->lastname }}</p>
             <p><strong>Date:</strong> {{ $estimate->created_at->format('d/m/Y') }}</p>
         </div>
+        @php
+            $hasTooth = $estimate->items->contains(fn($item) => !is_null($item->tooth));
+        @endphp
 
         <table>
             <thead>
                 <tr>
                     <th>Category</th>
                     <th>Treatment</th>
+                    @if ($hasTooth)
+                        <th>Tooth</th>
+                    @endif
                     <th>Unit Price</th>
                 </tr>
             </thead>
@@ -107,6 +112,9 @@
 
                         <td>{{ class_basename($item->itemable_type)=='Type'?'Appoitment':'Analysis' }}</td>
                         <td>{{ $item->itemable->act ?? $item->itemable->label }}</td>
+                        @if ($hasTooth)
+                            <td>{{ $item->tooth ?? '-' }}</td>
+                        @endif
                         <td>{{ number_format($item->unit_price, 2) }} DH</td>
                     </tr>
                 @endforeach

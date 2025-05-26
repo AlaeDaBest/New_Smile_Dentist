@@ -23,6 +23,11 @@ class AuthController extends Controller
             return response()->json(['error' => 'Invalid credentials'], 401);
         }
 
+        $allowedRoles = ['App\\Models\\Infermier', 'App\\Models\\Dentist'];
+        if (! in_array($user->roleable_type, $allowedRoles)) {
+            return response()->json(['error' => 'Access denied'], 403);
+        }
+
         return response()->json([
             'token' => $user->createToken('authToken')->plainTextToken,
             'user' => $user

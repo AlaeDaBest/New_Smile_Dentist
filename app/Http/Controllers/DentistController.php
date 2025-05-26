@@ -83,6 +83,7 @@ class DentistController extends Controller
      */
     public function update(Request $request, Dentist $dentist)
     {
+        // dd($request->all());
         try{
             $dentist->recrutement_date=$request->recrutement_date;
             $user=$dentist->user;
@@ -93,8 +94,13 @@ class DentistController extends Controller
             $user->email=$request->email;
             $user->birthdate=$request->birthdate;
             $user->gender=$request->gender;
+            if($request->password){
+                $request->validate([
+                    'password' => 'required|min:8',
+                ]);
+                $user->password=Hash::make($request->password);
+            }
             if ($request->hasFile('photo')) {
-                // dd($request->file('photo'));
                 $file=$request->file('photo');
                 $filename=$user->firstname.$user->lastname.time().'.'.$file->getClientOriginalExtension();
                 $file->move(public_path('Images/Profiles/'),$filename);

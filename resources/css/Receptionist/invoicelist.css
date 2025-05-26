@@ -45,10 +45,11 @@
   }
   
   .facture-button {
-    padding: 0.4rem 1rem;
+    padding: 4px 8px;
     border: none;
-    background-color: #007bff;
     color: white;
+    font-size: 2rem;
+    background-color: #007bff;
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s;

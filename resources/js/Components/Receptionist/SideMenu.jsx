@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { MdPayments } from "react-icons/md";
 import { BsFillChatDotsFill } from "react-icons/bs";
+import { IoPersonSharp } from "react-icons/io5";
 
 export default function SideMenu() {
   const [isOpen, setIsOpen] = useState(true);
@@ -43,6 +44,7 @@ export default function SideMenu() {
     { icon: <Receipt size={20} />, label: "Facturisation", path: "/facturisation" },
     { icon: <BsFillChatDotsFill size={20} />, label: "Messages", path: "/messages" },
     { icon: <MdDashboard size={20} />, label: "Dashboard", path: "/dashboard" },
+    { icon: <IoPersonSharp size={20} />, label: "Profile", path: "/profile" },
     { icon: <LogOut size={20}  />, label: "Logout", action: HandleLogout }
   ];
   return (
@@ -69,7 +71,7 @@ export default function SideMenu() {
                 to={item.path}
                 className={({ isActive }) => (isActive ? 'active-link menu-link' : 'menu-link')}
               >
-                {item.icon}
+                 {item.icon}
                 {isOpen && <span className="menu-label">{item.label}</span>}
               </NavLink>
             ) : (

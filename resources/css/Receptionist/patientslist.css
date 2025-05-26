@@ -315,6 +315,8 @@
     background-color: #ef4444;
     border: none;
     color: #fff;
+    padding: 12px 25px;
+    font-weight: bold;
     border-radius: 5px;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
@@ -357,6 +359,7 @@
   }
   
   .delete-btn:hover {
+    font-weight: bold;
     color: #bd2503;
   }
   

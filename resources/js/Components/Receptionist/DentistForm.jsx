@@ -201,6 +201,7 @@ const DentistForm = ({ dentist, onClose, onSaved }) => {
     const handleSubmit = async (e) => {
       e.preventDefault();
       const file = fileInputRef.current.files[0];
+      
       const NewDentist = {
         'CIN': formData.CIN,
         'firstname': formData.firstname,

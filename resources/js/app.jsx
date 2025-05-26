@@ -15,6 +15,7 @@ import FactureList from './Components/Receptionist/FactureList';
 import LoginForm from './Components/Auth/LoginForm';
 import GroupChat from './Components/Receptionist/GroupChat';
 import Dashboard from './Components/Receptionist/Dashboard';
+import Profile from './Components/Receptionist/Profile';
 
 function App(){
     return(<>
@@ -30,6 +31,7 @@ function App(){
                     <Route path="/appointments/" element= {<ListAppointments/>} />
                     <Route path="/messages/" element= {<GroupChat/>} />
                     <Route path="/dashboard/" element= {<Dashboard/>} />
+                    <Route path="/profile/" element= {<Profile />} />
                     <Route path="/login" element= {<LoginForm/>} />
                 </Routes>
             </HashRouter>

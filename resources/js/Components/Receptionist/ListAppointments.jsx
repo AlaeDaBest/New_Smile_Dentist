@@ -265,7 +265,7 @@ const ListAppointments = () => {
                     </td>
                     <td>
                       <select onChange={(e)=>handleSituationChange(appt.id,e.target.value)} disabled={appt.statut=='Arrived'?false:true} id="">
-                        <option value="Wainting">Wainting</option>
+                        <option value="Wainting">Waiting</option>
                         <option value="Armchair">Armchair</option>
                         <option value="Secretary">Secretary</option>
                         <option value="Abscent" selected={appt.statut=='Released'?true:false}>Released</option>

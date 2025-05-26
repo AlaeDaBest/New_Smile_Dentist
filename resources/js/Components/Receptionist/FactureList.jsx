@@ -99,6 +99,7 @@ const FactureList = () => {
                     </td>
                     <td>
                         <PiInvoiceBold className="facture-button" onClick={() => setSelectedFacture(f)} title="Payments" />
+                        {/* <PiInvoiceBold   onClick={() => setSelectedFacture(f)} title="Payments" /> */}
                         <FaDownload className="facture-button download-button" onClick={()=>HandleDownload(f.id)} title="Download PDF" />
                     </td>
                     </motion.tr>

@@ -174,7 +174,7 @@ const handleDeleteDentist=async(dentistId) => {
                         setShowNurseForm(true);
                       }} />
                       <TiUserDelete className='delete-btn' size={25} onClick={()=>{
-                        setShowDeleteConfirm(true)
+                        setShowDeleteConfirm(true);
                         setAssistantToDelete(n);
                         }} />
                     </div>
