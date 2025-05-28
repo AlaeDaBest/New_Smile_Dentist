@@ -159,6 +159,7 @@ const ListAppointments = () => {
         },});
         console.log(response);
         setShowDeleteConfirm(false);
+        fetchAppoitments();
         toast.success('Appointment deleted successfully');
     }catch(error){
         toast.error('Error deleting the appointments');

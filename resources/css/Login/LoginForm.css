@@ -1,64 +1,127 @@
+.dental-bg {
+  background: linear-gradient(135deg, #e0f7fa 0%, #efe6e6 50%, #eddcdc 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
 
-  #login_global{
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f4f8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-  }
-  .login-container {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    text-align: center;
-  }
-  
-  .login-title {
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 20px;
-    font-weight: 600;
-  }
-  
-  .login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .login-input {
-    padding: 12px;
-    font-size: 1rem;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    outline: none;
-    transition: border 0.3s;
-  }
-  
-  .login-input:focus {
-    border-color: #4b9cd3;
-  }
-  
-  .login-button {
-    padding: 12px;
-    font-size: 1rem;
-    background-color: #4b9cd3;
-    border: none;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .login-button:hover {
-    background-color: #3577a2;
-  }
-  
-  .login-button:active {
-    background-color: #29678a;
-  }
-  
+.dental-login-container {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  max-width: 450px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.tooth-header {
+  text-align: center;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.tooth-icon {
+  width: 60px;
+  height: 60px;
+  fill: #3b82f6;
+  margin-bottom: 15px;
+}
+
+.dental-login-title {
+  color: #da2b04;
+  font-size: 28px;
+  margin: 0;
+  font-weight: 700;
+}
+
+.dental-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group {
+  position: relative;
+}
+
+.dental-input {
+  width: 100%;
+  padding: 15px 15px 15px 45px;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: all 0.3s;
+  background-color: #f8f9fa;
+}
+
+.dental-input:focus {
+  outline: none;
+  border-color: #2336c4;
+  background-color: white;
+}
+
+.input-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  fill: #6c757d;
+}
+
+.dental-button {
+  background-color: #0013a5;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s;
+}
+
+.dental-button:hover {
+  background-color: #2a9d8f;
+}
+
+.button-icon {
+  width: 20px;
+  height: 20px;
+  fill: white;
+}
+
+.dental-decoration {
+  position: absolute;
+  bottom: -30px;
+  right: -30px;
+  opacity: 0.1;
+  z-index: 0;
+}
+
+.dental-tool {
+  width: 80px;
+  height: 80px;
+  fill: #0013a5;
+}
+
+.mirror {
+  position: absolute;
+  right: 50px;
+  bottom: 50px;
+}
+
+.probe {
+  position: absolute;
+  right: 100px;
+  bottom: 20px;
+}
