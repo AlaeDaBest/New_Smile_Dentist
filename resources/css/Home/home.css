@@ -61,7 +61,7 @@ img{
 #section_img:hover{
     opacity: 100%;
 }
-/* Abou Us*/
+/* About Us*/
 #about h2 {
     width: 100%;
     text-align: center;
@@ -161,8 +161,8 @@ img{
   
   .service-card {
     position: relative;
-    width: 250px;
-    height: 150px;
+    width: 300px;
+    height: 170px;
     background: white;
     color: black;
     border-radius: 16px;
@@ -172,7 +172,9 @@ img{
     transition: transform 0.3s ease;
     text-align: center;
   }
-  
+  .service-card p{
+    margin-top: 20px;
+  }
   .service-card:hover {
     transform: translateY(-5px);
     background-color: #0013a5;

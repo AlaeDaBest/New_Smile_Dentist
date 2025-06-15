@@ -339,6 +339,7 @@ export default function GroupChat() {
           padding: 12px 16px;
           border-radius: 18px;
           max-width: 70%;
+          min-width: 100px;
           position: relative;
           word-wrap: break-word;
           line-height: 1.4;

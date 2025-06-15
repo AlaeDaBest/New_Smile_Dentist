@@ -39,7 +39,7 @@ class InvoiceController extends Controller
     }
     public function generatePdf($id)
     {
-        $invoice = Invoice::with('payments')->findOrFail($id);
+        $invoice = Invoice::with(['payments','patient.user'])->findOrFail($id);
 
         $totalPaid = $invoice->payments->sum('amount_paid');
         $remaining = $invoice->total_amount - $totalPaid;
